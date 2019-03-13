@@ -1,0 +1,30 @@
+body {
+  background: aqua;
+}
+
+.container {
+  text-align: center;
+}
+
+.title {
+  text-align: center;
+}
+
+ul {
+}
+
+.btn {
+  font-size: 1.5em;
+  background-color: #008fb3;
+  color: #ffe6e6;
+}
+
+.timestamp {
+  color: grey;
+  font-weight: bold;
+  font-size: 0.7em;
+}
+
+.user {
+  font-weight: bold;
+}
