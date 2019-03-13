@@ -3,25 +3,104 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" href="design.css" />
   </head>
-  <body>
-    <script>
 
-      $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
+  <body>
+    <h1 class="title">Twiddler</h1>
+
+    <div class="container">
+      <ul></ul>
+      <button class="btn">New Tweet</button>
+    </div>
+
+    <!-- Main Script -->
+    <script>
+      // tweets
+      $(document).ready(function() {
+        //var $tweets = $(".tweets");
+        //$body.html("");
 
         var index = streams.home.length - 1;
-        while(index >= 0){
+        while (index >= 0) {
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          var $tweet = $(
+            "<div class='tweet'>" + ": " + tweet.message + "</div>"
+          );
+          var $user = $("<span class='user'>@" + tweet.user + "</span>");
+          $user.addClass(tweet.user);
+          $tweet.prepend($user);
+          $tweet.appendTo("ul");
+
+          let timestamp = formatDate(tweet.created_at);
+          let $timestamp = $("<span class='timestamp'></span>");
+          $timestamp.text(" " + timestamp);
+          $timestamp.appendTo($tweet);
+
           index -= 1;
         }
 
+        // User click
+        $(".user").on("click", function() {
+          alert();
+        });
       });
 
+      // Button Click
+      $(".btn").on("click", function() {
+        generateRandomTweet();
+
+        let newTweet = streams.home.pop();
+
+        var $tweet = $(
+          "<div class='tweet'>" + ": " + newTweet.message + "</div>"
+        );
+        var $user = $("<span class='user'>@" + newTweet.user + "</span>");
+        $user.addClass(newTweet.user);
+        $tweet.prepend($user);
+        $tweet.appendTo("ul");
+
+        let timestamp = formatDate(newTweet.created_at);
+        let $timestamp = $("<span class='timestamp'></span>");
+        $timestamp.text(" " + timestamp);
+        $timestamp.appendTo($tweet);
+      });
+
+      // formatting timeststamp
+      function formatDate(date) {
+        var monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ];
+
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+
+        return (
+          day +
+          " " +
+          monthNames[monthIndex] +
+          " " +
+          year +
+          " " +
+          hour +
+          ":" +
+          minute
+        );
+      }
     </script>
   </body>
 </html>
