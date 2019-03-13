@@ -28,7 +28,7 @@
             "<div class='tweet'>" + ": " + tweet.message + "</div>"
           );
           var $user = $("<span class='user'>@" + tweet.user + "</span>");
-          $user.addClass(tweet.user);
+          $user.attr("id", tweet.user);
           $tweet.prepend($user);
           $tweet.appendTo("ul");
 
@@ -37,13 +37,33 @@
           $timestamp.text(" " + timestamp);
           $timestamp.appendTo($tweet);
 
+          $user.on("click", function() {
+            $(".title").text(this.id);
+            $("ul").empty();
+            for (let i = 0; i < streams.users[this.id].length; i++) {
+              var tweet = streams.users[this.id][i];
+              var $tweet = $(
+                "<div class='tweet'>" + ": " + tweet.message + "</div>"
+              );
+              var $user = $("<span class='user'>@" + tweet.user + "</span>");
+              $user.attr("id", tweet.user);
+              $tweet.prepend($user);
+              $tweet.appendTo("ul");
+
+              let timestamp = formatDate(tweet.created_at);
+              let $timestamp = $("<span class='timestamp'></span>");
+              $timestamp.text(" " + timestamp);
+              $timestamp.appendTo($tweet);
+            }
+          });
+
           index -= 1;
         }
 
         // User click
-        $(".user").on("click", function() {
-          alert();
-        });
+        // $(.tweet.user).on("click", function() {
+        //   $(".title").text(tweet.user);
+        // });
       });
 
       // Button Click
